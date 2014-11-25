@@ -7,8 +7,8 @@ Cu.import('resource://gre/modules/NetUtil.jsm');
 //你可以自行修改保存 .swf 文件的文件夹名字。
 var aPath = OS.Path.join(OS.Constants.Path.profileDir, 'yourdirectory');
 
-//Localization code for console logs.
-//控制台记录的本地化代码。
+//Localization code for console logs.Non-Latin characters must be transcoded into UTF-8 code.
+//控制台记录的本地化代码。非拉丁文字必须转换成UTF-8代码。
 var aLocale = Cc['@mozilla.org/preferences-service;1'].getService(Ci.nsIPrefBranch).getComplexValue('general.useragent.locale', Ci.nsISupportsString).data;
 if (aLocale == 'ja') {
   var aLang = {
