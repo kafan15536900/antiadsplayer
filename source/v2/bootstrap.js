@@ -3,8 +3,12 @@ Cu.import('resource://gre/modules/osfile.jsm');
 Cu.import('resource://gre/modules/Downloads.jsm');
 Cu.import('resource://gre/modules/NetUtil.jsm');
 
-var aPath = OS.Path.join(OS.Constants.Path.profileDir, 'antiadsplayer');
+//You can customize the dir name to store .swf files
+//你可以自行修改保存 .swf 文件的文件夹名字。
+var aPath = OS.Path.join(OS.Constants.Path.profileDir, 'yourdirectory');
 
+//Localization code for console logs.
+//控制台记录的本底化代码。
 var aLocale = Cc['@mozilla.org/preferences-service;1'].getService(Ci.nsIPrefBranch).getComplexValue('general.useragent.locale', Ci.nsISupportsString).data;
 if (aLocale == 'ja') {
   var aLang = {
@@ -51,6 +55,8 @@ if (aLocale == 'ja') {
   }
 }
 
+//Lists of .swf files
+// .swf 文件列表
 var aName = [
   'loader.swf',
   'player.swf',
@@ -79,7 +85,11 @@ var aName = [
   ];
 aName.forEach(aCheck);
 
+//Check for update or corruption
+//检查文件是否需要升级或已经损坏。
 function aCheck(aName) {
+//You need to upload .swf files to your domain and list them here
+//你需要将 .swf 文件上传至你的服务器，然后添加到下面。
   var aLink = 'http://yourdomain.com/' + aName;
   var aFile = OS.Path.join(aPath, aName);
   OS.File.stat(aFile).then(
@@ -110,6 +120,8 @@ function aCheck(aName) {
   );
 }
 
+//Download .swf files
+//下载 .swf 文件。
 function aDownload(aLink, aFile, aName) {
   Downloads.fetch(aLink, aFile, {isPrivate: true}).then(
     function onSuccess() {
@@ -127,6 +139,8 @@ function aDownload(aLink, aFile, aName) {
 
 var aURI = OS.Path.toFileURI(aPath);
 
+//Core code from Harv.c (cinhoo), added Flilter-rules and more.
+//核心代码来自Harv.c (cinhoo)，添加了过滤规则以及更多功能。
 function aCommon() {}
 aCommon.prototype = {
   PLAYERS: {
@@ -509,23 +523,11 @@ function shutdown(data, reason) {
 
 function install(data, reason) {
   OS.File.makeDir(aPath);
-  if (reason == ADDON_UPGRADE) {
-    OS.File.move(OS.Path.join(aPath, 'sohu.swf'), OS.Path.join(aPath, 'sohu.inyy.Lite.swf'));
-    OS.File.move(OS.Path.join(aPath, 'sohu2.swf'), OS.Path.join(aPath, 'sohu.injs.Lite.swf'));
-    OS.File.move(OS.Path.join(aPath, 'sohu_live.swf'), OS.Path.join(aPath, 'sohu.inbj.Live.swf'));
-    OS.File.move(OS.Path.join(aPath, 'pplive.swf'), OS.Path.join(aPath, 'pptv.in.Ikan.swf'));
-    OS.File.move(OS.Path.join(aPath, 'Player_file.swf'), OS.Path.join(aPath, '17173.in.Vod.swf'));
-    OS.File.move(OS.Path.join(aPath, 'Player_file_out.swf'), OS.Path.join(aPath, '17173.out.Vod.swf'));
-    OS.File.move(OS.Path.join(aPath, 'Player_stream.swf'), OS.Path.join(aPath, '17173.in.Live.swf'));
-    OS.File.move(OS.Path.join(aPath, 'Player_stream_out.swf'), OS.Path.join(aPath, '17173.out.Live.swf'));
-    OS.File.move(OS.Path.join(aPath, 'ku6.swf'), OS.Path.join(aPath, 'ku6.in.swf'));
-    OS.File.move(OS.Path.join(aPath, 'ku6_out.swf'), OS.Path.join(aPath, 'ku6.out.swf'));
-    OS.File.move(OS.Path.join(aPath, 'pplive_live.swf'), OS.Path.join(aPath, 'pptv.in.Live.swf'));
-    OS.File.remove(OS.Path.join(aPath, 'letv.in.Live.swf'));
-  }
 }
 
 function uninstall(data, reason) {
+//Only delete aPath when add-on is uninstalled.
+//仅在彻底卸载扩展时才删除aPath文件夹。
   if (reason == ADDON_UNINSTALL) {
     OS.File.removeDir(aPath);
   }
