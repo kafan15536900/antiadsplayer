@@ -88,7 +88,7 @@ aName.forEach(aCheck);
 //Check for update or corruption
 //检查文件是否需要升级或已经损坏。
 function aCheck(aName) {
-//You need to upload .swf files to your domain.A domain with SSL is recommanded
+//You need to upload .swf files to your domain.A domain with SSL is recommended
 //你需要将 .swf 文件上传至你的服务器，推荐使用支持SSL加密连接的服务器。
   var aLink = 'yourdomain' + aName;
   var aFile = OS.Path.join(aPath, aName);
