@@ -8,7 +8,7 @@ Cu.import('resource://gre/modules/NetUtil.jsm');
 var aPath = OS.Path.join(OS.Constants.Path.profileDir, 'yourdirectory');
 
 //Localization code for console logs.
-//控制台记录的本底化代码。
+//控制台记录的本地化代码。
 var aLocale = Cc['@mozilla.org/preferences-service;1'].getService(Ci.nsIPrefBranch).getComplexValue('general.useragent.locale', Ci.nsISupportsString).data;
 if (aLocale == 'ja') {
   var aLang = {
