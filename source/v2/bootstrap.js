@@ -1,6 +1,6 @@
 const {classes: Cc, interfaces: Ci, results: Cr, utils: Cu} = Components;
-Cu.import('resource://gre/modules/osfile.jsm');
-Cu.import('resource://gre/modules/Downloads.jsm');
+Cu.import('resource://gre/modules/osfile.jsm'); //Require Geck 27 and later
+Cu.import('resource://gre/modules/Downloads.jsm'); //Require Geck 26 and later
 Cu.import('resource://gre/modules/NetUtil.jsm');
 
 //You can customize the dir name to store .swf files
