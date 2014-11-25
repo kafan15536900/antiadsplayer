@@ -88,9 +88,9 @@ aName.forEach(aCheck);
 //Check for update or corruption
 //检查文件是否需要升级或已经损坏。
 function aCheck(aName) {
-//You need to upload .swf files to your domain and list them here
-//你需要将 .swf 文件上传至你的服务器，然后添加到下面。
-  var aLink = 'http://yourdomain.com/' + aName;
+//You need to upload .swf files to your domain.A domain with SSL is recommanded
+//你需要将 .swf 文件上传至你的服务器，推荐使用支持SSL加密连接的服务器。
+  var aLink = 'yourdomain' + aName;
   var aFile = OS.Path.join(aPath, aName);
   OS.File.stat(aFile).then(
     function onSuccess(info) {
@@ -523,6 +523,13 @@ function shutdown(data, reason) {
 
 function install(data, reason) {
   OS.File.makeDir(aPath);
+//Rename exsited .swf file to keep synchorize with remote server.
+//重命名本地 .swf 文件以保持能与远程服务器同步。
+/*
+  if (reason == ADDON_UPGRADE) {
+    OS.File.move(OS.Path.join(aPath, 'sohu.swf'), OS.Path.join(aPath, 'sohu.inyy.Lite.swf'));
+  }
+*/
 }
 
 function uninstall(data, reason) {
